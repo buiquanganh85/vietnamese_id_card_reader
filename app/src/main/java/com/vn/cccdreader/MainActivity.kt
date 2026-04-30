@@ -220,10 +220,17 @@ class MainActivity : AppCompatActivity() {
             val extracted = withContext(Dispatchers.IO) {
                 MRZExtractor.extractFromUri(this@MainActivity, Uri.parse(uriString))
             }
-            if (extracted != null && mrzInfo == null) {
+            if (extracted != null) {
+                // Always update MRZ with newly extracted data, even if it already exists
+                // This ensures every verso photo capture updates the MRZ info
+                val wasUpdated = (mrzInfo != null)
                 mrzInfo = extracted
-                toast("✅ MRZ đã được tự động điền từ ảnh thẻ!")
-            } else if (extracted == null && mrzInfo == null) {
+                if (wasUpdated) {
+                    toast("🔄 MRZ đã được cập nhật từ ảnh thẻ!")
+                } else {
+                    toast("✅ MRZ đã được tự động điền từ ảnh thẻ!")
+                }
+            } else {
                 binding.tvStep3Status.text = "Không nhận dạng được – vui lòng nhập thủ công"
             }
             binding.btnEnterMrz.isEnabled = true
