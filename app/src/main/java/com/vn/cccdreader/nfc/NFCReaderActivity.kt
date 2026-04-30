@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import com.vn.cccdreader.data.IDCardData
 import com.vn.cccdreader.databinding.ActivityNfcReaderBinding
 import com.vn.cccdreader.util.parcelable
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -44,6 +46,7 @@ class NFCReaderActivity : AppCompatActivity() {
     private var existingData: IDCardData = IDCardData()
 
     @Volatile private var isReading = false
+    private var readingJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +74,7 @@ class NFCReaderActivity : AppCompatActivity() {
         supportActionBar?.title = "Đọc NFC / Read NFC"
 
         binding.btnCancel.setOnClickListener { finish() }
+        binding.btnRetry.setOnClickListener { resetReadingState() }
 
         showWaiting()
     }
@@ -118,7 +122,7 @@ class NFCReaderActivity : AppCompatActivity() {
             showReading("Đã phát hiện thẻ – đang xác thực…\nCard detected – authenticating…")
         }
 
-        lifecycleScope.launch {
+        readingJob = lifecycleScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
                     // Setting timeout BEFORE connect() ensures the very first
@@ -136,6 +140,8 @@ class NFCReaderActivity : AppCompatActivity() {
                             lifecycleScope.launch(Dispatchers.Main) { showReading(phase) }
                         }
                     )
+                } catch (e: CancellationException) {
+                    throw e
                 } catch (e: Exception) {
                     existingData.copy(
                         nfcReadSuccess = false,
@@ -155,6 +161,14 @@ class NFCReaderActivity : AppCompatActivity() {
                 showError(result.nfcErrorMessage.ifBlank { "NFC read failed. Please try again." })
             }
         }
+    }
+
+    // Cancels any in-flight read, resets all state, and returns to the waiting screen.
+    private fun resetReadingState() {
+        readingJob?.cancel()
+        readingJob = null
+        isReading = false
+        showWaiting()
     }
 
     // ─── UI helpers (all called on the main thread) ───────────────────────────
@@ -191,10 +205,6 @@ class NFCReaderActivity : AppCompatActivity() {
             tvSubStatus.visibility    = View.GONE
             cardError.visibility      = View.VISIBLE
             tvErrorMessage.text       = msg
-            btnRetry.setOnClickListener {
-                isReading = false
-                showWaiting()
-            }
         }
     }
 }
