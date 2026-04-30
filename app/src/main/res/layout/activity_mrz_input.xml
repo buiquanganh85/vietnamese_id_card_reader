@@ -12,6 +12,43 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- ── Auto-fill banner (shown when MRZ was extracted from photo) ── -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardAutoFillBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:background="#E8F5E9">
+
+                <TextView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:text="✅"
+                    android:textSize="16sp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="Dữ liệu MRZ đã được tự động điền từ ảnh thẻ. Vui lòng kiểm tra và xác nhận.\nMRZ data was auto-extracted from the card photo. Please review and confirm."
+                    android:textColor="#2E7D32"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="2dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- ── Info banner ────────────────────────────────────────────────── -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -88,7 +125,7 @@
             android:id="@+id/tilDob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ngày sinh / Date of Birth (DDMMYY or YYMMDD)"
+            android:hint="Ngày sinh / Date of Birth (DD/MM/YY)"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="16dp">
 
@@ -108,7 +145,7 @@
             android:id="@+id/tilExpiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ngày hết hạn / Expiry Date (DDMMYY or YYMMDD)"
+            android:hint="Ngày hết hạn / Expiry Date (DD/MM/YY)"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="20dp">
 
@@ -150,7 +187,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Số CCCD 12 chữ số → chỉ nhập 9 chữ số ĐẦU\n12-digit CCCD → enter only the FIRST 9 digits\n\nVí dụ / Example:\nCCCD: 079087001234  →  nhập: 079087001\nNgày sinh 01/01/1990  →  010190 hoặc 900101\nHết hạn 01/12/2035   →  011235 hoặc 351201"
+                    android:text="Số CCCD 12 chữ số → chỉ nhập 9 chữ số ĐẦU\n12-digit CCCD → enter only the FIRST 9 digits\n\nVí dụ / Example:\nCCCD: 079087001234  →  nhập: 079087001\nNgày sinh 01/01/1990  →  01/01/90\nHết hạn 01/12/2035   →  01/12/35"
                     android:textColor="@color/color_warning_text"
                     android:textSize="11sp"
                     android:fontFamily="monospace"

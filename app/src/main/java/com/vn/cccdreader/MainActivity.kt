@@ -3,6 +3,7 @@ package com.vn.cccdreader
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.view.View
@@ -10,14 +11,19 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.vn.cccdreader.camera.CameraActivity
 import com.vn.cccdreader.data.IDCardData
 import com.vn.cccdreader.databinding.ActivityMainBinding
 import com.vn.cccdreader.nfc.MRZInfo
 import com.vn.cccdreader.nfc.NFCReaderActivity
+import com.vn.cccdreader.ocr.MRZExtractor
 import com.vn.cccdreader.ui.MRZInputActivity
 import com.vn.cccdreader.ui.ResultActivity
 import com.vn.cccdreader.util.parcelable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Main entry screen – a step-by-step wizard:
@@ -59,6 +65,10 @@ class MainActivity : AppCompatActivity() {
                 cardData.copy(backPhotoPath = uri)
             }
             refreshStepUI()
+
+            if (mode == CameraActivity.MODE_BACK) {
+                extractMrzFromBackPhoto(uri)
+            }
         }
     }
 
@@ -129,7 +139,10 @@ class MainActivity : AppCompatActivity() {
             checkCameraAndLaunch(CameraActivity.MODE_BACK)
         }
         binding.btnEnterMrz.setOnClickListener {
-            mrzLauncher.launch(Intent(this, MRZInputActivity::class.java))
+            val intent = Intent(this, MRZInputActivity::class.java).apply {
+                mrzInfo?.let { putExtra(MRZInputActivity.KEY_PREFILLED_MRZ, it) }
+            }
+            mrzLauncher.launch(intent)
         }
         binding.btnReadNfc.setOnClickListener {
             val mrz = mrzInfo
@@ -164,9 +177,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.tvStep1Status.text = if (hasFront) "✓ Đã chụp mặt trước" else "Chưa chụp"
         binding.tvStep2Status.text = if (hasBack)  "✓ Đã chụp mặt sau"   else "Chưa chụp"
-        binding.tvStep3Status.text = if (hasMRZ) {
-            "✓ ${mrzInfo!!.documentNumber.trimEnd('<')}"
-        } else "Chưa nhập"
+        if (hasMRZ) {
+            binding.tvStep3Status.text = "✓ ${mrzInfo!!.documentNumber.trimEnd('<')} (tự động / auto)"
+        } else if (binding.tvStep3Status.text.startsWith("🔍") || binding.tvStep3Status.text.startsWith("Không")) {
+            // Keep the OCR status message intact
+        } else {
+            binding.tvStep3Status.text = "Chưa nhập"
+        }
         binding.tvStep4Status.text = if (hasNFC)   "✓ Đọc NFC thành công" else "Chưa đọc"
 
         // Enable/disable NFC button
@@ -193,6 +210,25 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, CameraActivity::class.java)
             .putExtra(CameraActivity.KEY_MODE, mode)
         cameraLauncher.launch(intent)
+    }
+
+    private fun extractMrzFromBackPhoto(uriString: String) {
+        binding.tvStep3Status.text = "🔍 Đang nhận dạng MRZ từ ảnh..."
+        binding.btnEnterMrz.isEnabled = false
+
+        lifecycleScope.launch {
+            val extracted = withContext(Dispatchers.IO) {
+                MRZExtractor.extractFromUri(this@MainActivity, Uri.parse(uriString))
+            }
+            if (extracted != null && mrzInfo == null) {
+                mrzInfo = extracted
+                toast("✅ MRZ đã được tự động điền từ ảnh thẻ!")
+            } else if (extracted == null && mrzInfo == null) {
+                binding.tvStep3Status.text = "Không nhận dạng được – vui lòng nhập thủ công"
+            }
+            binding.btnEnterMrz.isEnabled = true
+            refreshStepUI()
+        }
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

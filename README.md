@@ -22,6 +22,7 @@ The application implements a step-by-step wizard to collect card data:
   - **Glide:** For efficient image loading and processing.
   - **Coroutines:** For asynchronous I/O and NFC transceive operations.
   - **ViewBinding:** For safe UI interaction.
+  - **Google ML Kit:** For Text Recognition (OCR) used in MRZ extraction.
 
 ## 📋 Requirements
 
@@ -59,6 +60,8 @@ app/src/main/java/com/vn/cccdreader/
 │   ├── MRTDReader.kt          # Orchestrator for NFC chip reading
 │   ├── NFCReaderActivity.kt   # UI and lifecycle for NFC scanning
 │   └── SecureMessaging.kt     # Session encryption (3DES/MAC)
+├── ocr/
+│   └── MRZExtractor.kt        # Google ML Kit OCR for MRZ parsing
 ├── ui/
 │   ├── MRZInputActivity.kt    # Manual entry for MRZ data
 │   └── ResultActivity.kt      # Display of final results and face photo
@@ -74,9 +77,9 @@ The project includes unit and instrumentation tests:
 - **Unit Tests:** Found in `app/src/test`. Run via `./gradlew test`.
 - **Instrumentation Tests:** Found in `app/src/androidTest`. Run via `./gradlew connectedAndroidTest`.
 
-## 📝 TODO List
+## 📋 TODO List
 
-- [ ] **Automatic MRZ Extraction:** Extract MRZ data from the verso card image to auto-fill Step 3.
+- [x] **Automatic MRZ Extraction:** Extract MRZ data from the verso card image to auto-fill Step 3. (Implemented using Google ML Kit)
 - [ ] **QR Code Extraction:** Extract QR code data from the verso card image.
 - [ ] **ID Number Extraction:** Extract the ID number from the recto card image.
 - [ ] **Data Verification:** Implement a verification layer to check coherence between:
