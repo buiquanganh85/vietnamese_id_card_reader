@@ -6,7 +6,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputLayout
+import com.vn.cccdreader.R
 import com.vn.cccdreader.databinding.ActivityMrzInputBinding
 import com.vn.cccdreader.nfc.MRZInfo
 import com.vn.cccdreader.util.parcelable
@@ -20,6 +22,11 @@ import com.vn.cccdreader.util.parcelable
  * Dates are displayed and entered as DD/MM/YY. Internally they are stored
  * and sent to the NFC reader as YYMMDD (the MRZ wire format).
  *
+ * Color feedback for auto-filled values:
+ *   • BLUE (#2196F3) - value verified by check digit
+ *   • RED (#F44336) - value failed check digit validation
+ *   • BLACK - user modified the field manually
+ *
  * Returns via RESULT_OK:
  *   KEY_MRZ_INFO – MRZInfo parcelable (dates in YYMMDD)
  */
@@ -29,9 +36,18 @@ class MRZInputActivity : AppCompatActivity() {
         const val KEY_MRZ_INFO      = "mrz_info"
         const val KEY_PREFILLED_MRZ = "prefilled_mrz"
         const val REQUEST_CODE      = 2002
+
+        private val COLOR_VERIFIED = 0xFF2196F3.toInt()     // Blue
+        private val COLOR_UNVERIFIED = 0xFFF44336.toInt()   // Red
+        private val COLOR_NEUTRAL = 0xFF000000.toInt()      // Black
     }
 
     private lateinit var binding: ActivityMrzInputBinding
+
+    // Track validation status to detect user edits
+    private var docNumberVerified = false
+    private var dobVerified = false
+    private var expiryVerified = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +69,43 @@ class MRZInputActivity : AppCompatActivity() {
     private fun prefillFromIntent() {
         val prefilled = intent.parcelable<MRZInfo>(KEY_PREFILLED_MRZ) ?: return
         binding.cardAutoFillBanner.visibility = View.VISIBLE
+
+        // Validate check digits and apply color coding
+        val validation = prefilled.validateCheckDigits()
+
+        // Document number
         binding.etDocNumber.setText(prefilled.documentNumber.trimEnd('<'))
-        // MRZInfo dates are YYMMDD. Convert to raw DDMMYY digits; the TextWatcher
-        // registered in setupDateFormatHelpers will format them as DD/MM/YY.
+        if (validation.documentNumberValid) {
+            setTextColor(binding.etDocNumber, COLOR_VERIFIED)
+            docNumberVerified = true
+        } else {
+            setTextColor(binding.etDocNumber, COLOR_UNVERIFIED)
+            docNumberVerified = false
+        }
+
+        // Date of birth
         binding.etDob.setText(yymmddToDdmmyy(prefilled.dateOfBirth))
+        if (validation.dateOfBirthValid) {
+            setTextColor(binding.etDob, COLOR_VERIFIED)
+            dobVerified = true
+        } else {
+            setTextColor(binding.etDob, COLOR_UNVERIFIED)
+            dobVerified = false
+        }
+
+        // Expiry date
         binding.etExpiry.setText(yymmddToDdmmyy(prefilled.expiryDate))
+        if (validation.expiryDateValid) {
+            setTextColor(binding.etExpiry, COLOR_VERIFIED)
+            expiryVerified = true
+        } else {
+            setTextColor(binding.etExpiry, COLOR_UNVERIFIED)
+            expiryVerified = false
+        }
+    }
+
+    private fun setTextColor(editText: android.widget.EditText, color: Int) {
+        editText.setTextColor(color)
     }
 
     // ── Input watchers ────────────────────────────────────────────────────────
@@ -65,6 +113,11 @@ class MRZInputActivity : AppCompatActivity() {
     private fun setupInputWatchers() {
         binding.etDocNumber.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                // Reset color to black when user edits
+                if (docNumberVerified) {
+                    setTextColor(binding.etDocNumber, COLOR_NEUTRAL)
+                    docNumberVerified = false
+                }
                 val text = s.toString().uppercase().replace(" ", "").take(9)
                 val chk  = MRZInfo.checkDigit(text.padEnd(9, '<'))
                 binding.tilDocNumber.helperText = "Check digit: $chk"
@@ -75,13 +128,23 @@ class MRZInputActivity : AppCompatActivity() {
     }
 
     private fun setupDateFormatHelpers() {
-        fun autoFormatDate(et: android.widget.EditText, til: TextInputLayout) {
+        fun autoFormatDate(et: android.widget.EditText, til: TextInputLayout, isDoB: Boolean) {
             et.addTextChangedListener(object : TextWatcher {
                 private var isFormatting = false
                 override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
                 override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
                 override fun afterTextChanged(s: Editable?) {
                     if (isFormatting) return
+
+                    // Reset color to black when user edits
+                    if (isDoB && dobVerified) {
+                        setTextColor(et, COLOR_NEUTRAL)
+                        dobVerified = false
+                    } else if (!isDoB && expiryVerified) {
+                        setTextColor(et, COLOR_NEUTRAL)
+                        expiryVerified = false
+                    }
+
                     isFormatting = true
                     val digits    = s.toString().filter { it.isDigit() }.take(6)
                     val formatted = formatDdMmYy(digits)
@@ -98,8 +161,8 @@ class MRZInputActivity : AppCompatActivity() {
                 }
             })
         }
-        autoFormatDate(binding.etDob, binding.tilDob)
-        autoFormatDate(binding.etExpiry, binding.tilExpiry)
+        autoFormatDate(binding.etDob, binding.tilDob, true)
+        autoFormatDate(binding.etExpiry, binding.tilExpiry, false)
     }
 
     // ── Validation & submit ───────────────────────────────────────────────────
