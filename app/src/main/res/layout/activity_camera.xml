@@ -12,6 +12,7 @@
 
     <!-- Card outline guide -->
     <View
+        android:id="@+id/cardFrameGuide"
         android:layout_width="300dp"
         android:layout_height="190dp"
         android:layout_gravity="center"
@@ -54,21 +55,55 @@
             <Button
                 android:id="@+id/btnCancel"
                 style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Huỷ"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Review overlay: shows captured image with Confirm/Retake -->
+    <FrameLayout
+        android:id="@+id/reviewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:background="#80000000">
+
+            <Button
+                android:id="@+id/btnRetake"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
-                android:text="Huỷ"
+                android:text="↺ Chụp lại / Retake"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:layout_marginEnd="12dp" />
 
             <Button
-                android:id="@+id/btnCapture"
+                android:id="@+id/btnConfirm"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="2"
-                android:text="📷  Chụp ảnh"
+                android:layout_weight="1"
+                android:text="✓ Xác nhận / Confirm"
                 android:textAllCaps="false" />
         </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
 
 </FrameLayout>

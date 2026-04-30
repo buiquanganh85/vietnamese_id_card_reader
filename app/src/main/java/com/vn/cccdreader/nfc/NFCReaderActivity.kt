@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.logging.Logger
 
 /**
  * NFC reading screen.
@@ -133,6 +134,7 @@ class NFCReaderActivity : AppCompatActivity() {
                     isoDep.connect()
                     runCatching { isoDep.timeout = 30_000 }
                     val reader = MRTDReader(isoDep)
+
                     reader.readCard(
                         mrzInfo = mrzInfo!!,
                         existingData = existingData,
