@@ -258,65 +258,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- ── MRZ raw data ─────────────────────────────────────────────────── -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/groupMRZ"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            android:layout_marginBottom="16dp"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🔠  MRZ Raw Data"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
-
-                <TextView
-                    android:id="@+id/tvMrzLine1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_secondary"
-                    android:background="#F5F5F5"
-                    android:padding="6dp"
-                    android:layout_marginBottom="2dp" />
-
-                <TextView
-                    android:id="@+id/tvMrzLine2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_secondary"
-                    android:background="#F5F5F5"
-                    android:padding="6dp"
-                    android:layout_marginBottom="2dp" />
-
-                <TextView
-                    android:id="@+id/tvMrzLine3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_secondary"
-                    android:background="#F5F5F5"
-                    android:padding="6dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
         <!-- ── Camera photo: Front ─────────────────────────────────────────── -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardFrontPhoto"

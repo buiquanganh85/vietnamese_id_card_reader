@@ -86,16 +86,6 @@ class ResultActivity : AppCompatActivity() {
         binding.tvNationality.text    = data.nationality.ifBlank { "—" }
         binding.tvExpiry.text         = data.displayExpiry().ifBlank { "—" }
 
-        // ── MRZ raw ──────────────────────────────────────────────────────────
-        if (data.mrzLine1.isNotBlank()) {
-            binding.groupMRZ.visibility = View.VISIBLE
-            binding.tvMrzLine1.text = data.mrzLine1
-            binding.tvMrzLine2.text = data.mrzLine2
-            binding.tvMrzLine3.text = data.mrzLine3.ifBlank { "" }
-        } else {
-            binding.groupMRZ.visibility = View.GONE
-        }
-
         // ── NFC status chip ───────────────────────────────────────────────────
         if (data.nfcReadSuccess) {
             binding.chipNfcStatus.text            = "✓ NFC đọc thành công"

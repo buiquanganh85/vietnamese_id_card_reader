@@ -1,7 +1,6 @@
 package com.vn.cccdreader.nfc
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.IsoDep
@@ -46,9 +45,6 @@ class NFCReaderActivity : AppCompatActivity() {
 
     @Volatile private var isReading = false
 
-    // Holds the last successfully read result so btnDone can return it
-    private var lastResult: IDCardData = IDCardData()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNfcReaderBinding.inflate(layoutInflater)
@@ -75,11 +71,6 @@ class NFCReaderActivity : AppCompatActivity() {
         supportActionBar?.title = "Đọc NFC / Read NFC"
 
         binding.btnCancel.setOnClickListener { finish() }
-        binding.btnDone.setOnClickListener {
-            val resultIntent = Intent().putExtra(KEY_CARD_DATA, lastResult)
-            setResult(RESULT_OK, resultIntent)
-            finish()
-        }
 
         showWaiting()
     }
@@ -157,8 +148,9 @@ class NFCReaderActivity : AppCompatActivity() {
 
             isReading = false
             if (result.nfcReadSuccess) {
-                lastResult = result
-                showResult(result)
+                val resultIntent = Intent().putExtra(KEY_CARD_DATA, result)
+                setResult(RESULT_OK, resultIntent)
+                finish()
             } else {
                 showError(result.nfcErrorMessage.ifBlank { "NFC read failed. Please try again." })
             }
@@ -174,10 +166,7 @@ class NFCReaderActivity : AppCompatActivity() {
             ivNfcIcon.visibility      = View.VISIBLE
             tvStatus.text             = "Đặt thẻ CCCD lên mặt sau điện thoại\n\nPlace the CCCD card on the back of your phone near the NFC antenna"
             tvSubStatus.visibility    = View.GONE
-            cardResult.visibility     = View.GONE
             cardError.visibility      = View.GONE
-            btnDone.visibility        = View.GONE
-            btnCancel.text            = "Huỷ / Cancel"
         }
     }
 
@@ -189,54 +178,7 @@ class NFCReaderActivity : AppCompatActivity() {
             tvStatus.text             = phase
             tvSubStatus.text          = "⚠ Giữ thẻ yên – không di chuyển!\nKeep the card perfectly still!"
             tvSubStatus.visibility    = View.VISIBLE
-            cardResult.visibility     = View.GONE
             cardError.visibility      = View.GONE
-            btnDone.visibility        = View.GONE
-        }
-    }
-
-    private fun showResult(data: IDCardData) {
-        binding.apply {
-            layoutScanning.visibility = View.GONE
-            cardError.visibility      = View.GONE
-            cardResult.visibility     = View.VISIBLE
-            btnDone.visibility        = View.VISIBLE
-            btnCancel.text            = "Đọc lại / Re-scan"
-
-            // Face photo from DG2
-            val faceBytes = data.faceImageBytes
-            if (faceBytes != null && faceBytes.isNotEmpty()) {
-                val bmp = runCatching {
-                    BitmapFactory.decodeByteArray(faceBytes, 0, faceBytes.size)
-                }.getOrNull()
-                if (bmp != null) {
-                    ivFacePhoto.setImageBitmap(bmp)
-                    ivFacePhoto.visibility   = View.VISIBLE
-                    tvNoFacePhoto.visibility = View.GONE
-                } else {
-                    tvNoFacePhoto.text       = "Không giải mã được ảnh / Could not decode photo"
-                    tvNoFacePhoto.visibility = View.VISIBLE
-                    ivFacePhoto.visibility   = View.GONE
-                }
-            } else {
-                tvNoFacePhoto.visibility = View.VISIBLE
-                ivFacePhoto.visibility   = View.GONE
-            }
-
-            // Identity fields
-            tvFullName.text    = data.fullName().ifBlank { "—" }
-            tvDocNumber.text   = data.documentNumber.ifBlank { "—" }
-            tvDob.text         = data.displayDOB().ifBlank { "—" }
-            tvSex.text         = data.displaySex().ifBlank { "—" }
-            tvNationality.text = data.nationality.ifBlank { "—" }
-            tvExpiry.text      = data.displayExpiry().ifBlank { "—" }
-            tvPersonalNo.text  = data.personalNumber.ifBlank { data.documentNumber }.ifBlank { "—" }
-
-            // Raw MRZ lines
-            tvMrzLine1.text       = data.mrzLine1.ifBlank { "(empty)" }
-            tvMrzLine2.text       = data.mrzLine2.ifBlank { "(empty)" }
-            tvMrzLine3.text       = data.mrzLine3.ifBlank { "" }
-            tvMrzLine3.visibility = if (data.mrzLine3.isBlank()) View.GONE else View.VISIBLE
         }
     }
 
@@ -247,11 +189,8 @@ class NFCReaderActivity : AppCompatActivity() {
             ivNfcIcon.visibility      = View.VISIBLE
             tvStatus.text             = "Lỗi / Error"
             tvSubStatus.visibility    = View.GONE
-            cardResult.visibility     = View.GONE
             cardError.visibility      = View.VISIBLE
             tvErrorMessage.text       = msg
-            btnDone.visibility        = View.GONE
-            btnCancel.text            = "Huỷ / Cancel"
             btnRetry.setOnClickListener {
                 isReading = false
                 showWaiting()
