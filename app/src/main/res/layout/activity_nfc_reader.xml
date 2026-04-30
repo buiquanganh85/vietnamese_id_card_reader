@@ -19,40 +19,53 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:paddingTop="32dp"
+            android:paddingTop="24dp"
             android:paddingBottom="16dp">
 
-            <ImageView
-                android:id="@+id/ivNfcIcon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_nfc_scan"
-                android:layout_marginBottom="20dp" />
+            <!-- NFC icon inside a white card bubble -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                app:cardCornerRadius="70dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/surface"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:id="@+id/ivNfcIcon"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_nfc_scan"
+                    app:tint="@color/color_primary" />
+            </androidx.cardview.widget.CardView>
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:indeterminateTint="@color/color_primary"
                 android:visibility="gone"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="24dp" />
 
             <TextView
                 android:id="@+id/tvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đặt thẻ CCCD lên mặt sau điện thoại\n\nPlace the CCCD card on the back of your phone near the NFC antenna"
-                android:textSize="17sp"
+                android:text="Đặt thẻ CCCD lên mặt sau điện thoại&#10;&#10;Place the CCCD card on the back of your phone near the NFC antenna"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/color_primary"
                 android:gravity="center"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="12dp" />
 
             <TextView
                 android:id="@+id/tvSubStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:textColor="@color/color_step4"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:visibility="gone"
                 android:layout_marginBottom="16dp" />
@@ -64,10 +77,54 @@
             android:id="@+id/cardError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="#FFF3CD"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/color_error_bg"
+            app:cardElevation="3dp"
             android:visibility="gone"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠  Lỗi đọc NFC / NFC Error"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_error_text"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvErrorMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_error_text"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="14dp" />
+
+                <Button
+                    android:id="@+id/btnRetry"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="🔄  Thử lại / Retry"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/color_step4" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ── Instruction hint card ──────────────────────────────────────── -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="#E3F2FD"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,46 +135,31 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⚠  Lỗi đọc NFC / NFC Error"
+                    android:text="💡 Mẹo / Tips"
                     android:textStyle="bold"
-                    android:textColor="#856404"
-                    android:textSize="14sp"
+                    android:textColor="#0D47A1"
+                    android:textSize="13sp"
                     android:layout_marginBottom="6dp" />
 
                 <TextView
-                    android:id="@+id/tvErrorMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#856404"
+                    android:text="• Đặt thẻ sát mặt sau điện thoại\n• Giữ nguyên cho đến khi hoàn tất\n• Thử nhiều vị trí nếu không nhận\n\n• Hold the card flat against the phone back\n• Keep still until reading completes\n• Try different positions if not detected"
+                    android:textColor="#1565C0"
                     android:textSize="12sp"
-                    android:layout_marginBottom="12dp" />
-
-                <Button
-                    android:id="@+id/btnRetry"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:text="Thử lại / Retry"
-                    android:textAllCaps="false" />
-
+                    android:lineSpacingExtra="2dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- ── Action buttons ─────────────────────────────────────────────── -->
-        <LinearLayout
+        <!-- ── Cancel button ──────────────────────────────────────────────── -->
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-
-            <Button
-                android:id="@+id/btnCancel"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Huỷ / Cancel"
-                android:textAllCaps="false" />
-
-        </LinearLayout>
+            android:layout_height="52dp"
+            android:text="Huỷ / Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary" />
 
     </LinearLayout>
 </ScrollView>

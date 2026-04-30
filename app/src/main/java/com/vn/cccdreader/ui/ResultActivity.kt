@@ -88,11 +88,13 @@ class ResultActivity : AppCompatActivity() {
 
         // ── NFC status chip ───────────────────────────────────────────────────
         if (data.nfcReadSuccess) {
-            binding.chipNfcStatus.text            = "✓ NFC đọc thành công"
-            binding.chipNfcStatus.setChipBackgroundColorResource(R.color.color_success_bg)
+            binding.chipNfcStatus.text = "✓ NFC đọc thành công"
+            binding.chipNfcStatus.setChipBackgroundColorResource(R.color.color_success_text)
+            binding.chipNfcStatus.setTextColor(resources.getColor(R.color.white, theme))
         } else {
-            binding.chipNfcStatus.text            = "✗ Chưa đọc NFC"
-            binding.chipNfcStatus.setChipBackgroundColorResource(R.color.color_warning_bg)
+            binding.chipNfcStatus.text = "✗ Chưa đọc NFC"
+            binding.chipNfcStatus.setChipBackgroundColorResource(R.color.color_warning_text)
+            binding.chipNfcStatus.setTextColor(resources.getColor(R.color.white, theme))
             if (data.nfcErrorMessage.isNotBlank()) {
                 binding.tvNfcError.text       = data.nfcErrorMessage
                 binding.tvNfcError.visibility = View.VISIBLE

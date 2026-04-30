@@ -17,26 +17,27 @@
             android:id="@+id/tvNfcWarning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF3CD"
+            android:background="@color/color_warning_bg"
+            android:drawablePadding="6dp"
             android:padding="12dp"
-            android:textColor="#856404"
+            android:textColor="@color/color_warning_text"
             android:textSize="13sp"
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
-        <!-- App header -->
+        <!-- ── App header ──────────────────────────────────────────────────── -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            android:layout_marginBottom="16dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:padding="24dp"
                 android:background="@color/color_primary">
 
                 <TextView
@@ -44,16 +45,16 @@
                     android:layout_height="wrap_content"
                     android:text="🪪 CCCD Reader"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đọc thông tin Căn Cước Công Dân qua NFC"
                     android:textColor="#CCffffff"
-                    android:textSize="13sp"
-                    android:layout_marginTop="4dp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -61,8 +62,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/surface"
             android:layout_marginBottom="12dp">
 
             <LinearLayout
@@ -75,16 +77,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:text="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="@color/color_step1" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Bước 1 – Chụp mặt TRƯỚC"
+                        android:text="Chụp mặt TRƯỚC"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/color_step1"
+                        android:layout_marginStart="12dp" />
 
                     <ImageView
                         android:id="@+id/ivStep1Check"
@@ -101,15 +116,15 @@
                     android:text="Chưa chụp"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <Button
                     android:id="@+id/btnCaptureFront"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="📷  Chụp mặt trước"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/color_step1" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -117,8 +132,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/surface"
             android:layout_marginBottom="12dp">
 
             <LinearLayout
@@ -131,16 +147,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:text="2"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="@color/color_step2" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Bước 2 – Chụp mặt SAU"
+                        android:text="Chụp mặt SAU"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/color_step2"
+                        android:layout_marginStart="12dp" />
 
                     <ImageView
                         android:id="@+id/ivStep2Check"
@@ -157,15 +186,15 @@
                     android:text="Chưa chụp"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <Button
                     android:id="@+id/btnCaptureBack"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="📷  Chụp mặt sau"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/color_step2" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -173,8 +202,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/surface"
             android:layout_marginBottom="12dp">
 
             <LinearLayout
@@ -187,16 +217,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:text="3"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="@color/color_step3" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Bước 3 – Nhập dữ liệu MRZ"
+                        android:text="Nhập dữ liệu MRZ"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/color_step3"
+                        android:layout_marginStart="12dp" />
 
                     <ImageView
                         android:id="@+id/ivStep3Check"
@@ -213,23 +256,23 @@
                     android:text="Chưa nhập"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="4dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nhập số CCCD, ngày sinh, và ngày hết hạn để xác thực chip NFC"
+                    android:text="Nhập số CCCD, ngày sinh và ngày hết hạn để xác thực chip NFC"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <Button
                     android:id="@+id/btnEnterMrz"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="✏️  Nhập thông tin MRZ"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/color_step3" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -237,9 +280,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
-            android:layout_marginBottom="12dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/surface"
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -251,16 +295,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:text="4"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="@color/color_step4" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Bước 4 – Đọc chip NFC"
+                        android:text="Đọc chip NFC"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/color_step4"
+                        android:layout_marginStart="12dp" />
 
                     <ImageView
                         android:id="@+id/ivStep4Check"
@@ -277,8 +334,7 @@
                     android:text="Chưa đọc"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <Button
                     android:id="@+id/btnReadNfc"
@@ -286,22 +342,22 @@
                     android:layout_height="48dp"
                     android:text="📡  Đọc NFC"
                     android:textAllCaps="false"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    app:backgroundTint="@color/color_step4" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- ── View Results ────────────────────────────────────────────────── -->
         <Button
             android:id="@+id/btnViewResults"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:text="📋  Xem kết quả / View Results"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:enabled="false"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            app:backgroundTint="@color/color_primary" />
 
     </LinearLayout>
 </ScrollView>

@@ -79,12 +79,18 @@ class MainActivity : AppCompatActivity() {
             if (updated != null) {
                 cardData = updated
                 if (updated.nfcReadSuccess) {
-                    toast("✓ NFC đọc thành công / NFC read successful")
+                    refreshStepUI()
+                    startActivity(
+                        Intent(this, ResultActivity::class.java)
+                            .putExtra(ResultActivity.KEY_CARD_DATA, cardData)
+                    )
                 } else {
                     toast("NFC read failed: ${updated.nfcErrorMessage}")
+                    refreshStepUI()
                 }
+            } else {
+                refreshStepUI()
             }
-            refreshStepUI()
         }
     }
 

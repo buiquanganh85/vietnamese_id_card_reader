@@ -18,16 +18,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginBottom="12dp"
-            android:text="NFC Status"
-            app:chipCornerRadius="16dp" />
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:chipCornerRadius="16dp"
+            app:chipStrokeWidth="0dp" />
 
+        <!-- NFC error message -->
         <TextView
             android:id="@+id/tvNfcError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#856404"
+            android:textColor="@color/color_error_text"
             android:textSize="12sp"
-            android:background="#FFF3CD"
+            android:background="@color/color_error_bg"
             android:padding="10dp"
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
@@ -36,9 +39,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="14dp"
             app:cardElevation="4dp"
-            android:layout_marginBottom="16dp">
+            app:cardBackgroundColor="@color/surface"
+            android:layout_marginBottom="14dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,14 +50,32 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- Section header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="📸  Ảnh trên chip NFC / NFC Chip Photo"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="12dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:text="📸"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="#E3F2FD" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ảnh chip NFC / NFC Chip Photo"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_primary"
+                        android:layout_marginStart="10dp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/ivFacePhoto"
@@ -61,7 +83,7 @@
                     android:layout_height="160dp"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerCrop"
-                    android:background="#EEEEEE"
+                    android:background="@color/divider"
                     android:visibility="gone" />
 
                 <TextView
@@ -80,9 +102,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="14dp"
             app:cardElevation="4dp"
-            android:layout_marginBottom="16dp">
+            app:cardBackgroundColor="@color/surface"
+            android:layout_marginBottom="14dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,13 +113,38 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- Section header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="👤  Thông tin cá nhân / Personal Information"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:text="👤"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="#EDE7F6" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thông tin cá nhân / Personal Info"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_step2"
+                        android:layout_marginStart="10dp" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
                     android:layout_marginBottom="14dp" />
 
                 <!-- Full name -->
@@ -104,13 +152,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Họ và tên:"
+                        android:text="Họ và tên"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvFullName"
                         android:layout_width="0dp"
@@ -127,21 +175,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Số CCCD:"
+                        android:text="Số CCCD"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvDocNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="—"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/color_primary"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         android:fontFamily="monospace" />
                 </LinearLayout>
 
@@ -150,20 +199,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Số cá nhân:"
+                        android:text="Số cá nhân"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvPersonalNo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="—"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/color_primary"
                         android:textSize="14sp"
                         android:fontFamily="monospace" />
                 </LinearLayout>
@@ -173,13 +222,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Ngày sinh:"
+                        android:text="Ngày sinh"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvDob"
                         android:layout_width="0dp"
@@ -187,7 +236,8 @@
                         android:layout_weight="1"
                         android:text="—"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <!-- Sex -->
@@ -195,13 +245,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Giới tính:"
+                        android:text="Giới tính"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvSex"
                         android:layout_width="0dp"
@@ -217,13 +267,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="12dp">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Quốc tịch:"
+                        android:text="Quốc tịch"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvNationality"
                         android:layout_width="0dp"
@@ -240,19 +290,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="Ngày hết hạn:"
+                        android:text="Ngày hết hạn"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tvExpiry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="—"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
+                        android:textColor="@color/color_step4"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -263,25 +314,43 @@
             android:id="@+id/cardFrontPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="14dp"
             app:cardElevation="4dp"
-            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/surface"
+            android:layout_marginBottom="14dp"
             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="📷  Mặt trước / Front"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:text="📷"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="#E8F5E9" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mặt trước / Front"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_step3"
+                        android:layout_marginStart="10dp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/ivFrontPhoto"
@@ -296,8 +365,9 @@
             android:id="@+id/cardBackPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="14dp"
             app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/surface"
             android:layout_marginBottom="24dp"
             android:visibility="gone">
 
@@ -305,16 +375,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="📷  Mặt sau / Back"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:text="📷"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_step"
+                        android:backgroundTint="#EDE7F6" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mặt sau / Back"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/color_step2"
+                        android:layout_marginStart="10dp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/ivBackPhoto"
