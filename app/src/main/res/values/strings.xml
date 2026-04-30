@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CCCD Reader</string>
+    <string name="title_main">Đọc CCCD / CCCD Reader</string>
+    <string name="title_camera">Chụp thẻ CCCD</string>
+    <string name="title_nfc">Đọc NFC</string>
+    <string name="title_mrz_input">Nhập MRZ</string>
+    <string name="title_result">Kết quả / Results</string>
+
+    <!-- Buttons -->
+    <string name="btn_capture_front">Chụp mặt trước</string>
+    <string name="btn_capture_back">Chụp mặt sau</string>
+    <string name="btn_enter_mrz">Nhập MRZ</string>
+    <string name="btn_read_nfc">Đọc NFC</string>
+    <string name="btn_view_results">Xem kết quả</string>
+    <string name="btn_cancel">Huỷ</string>
+    <string name="btn_confirm">Xác nhận</string>
+    <string name="btn_retry">Thử lại</string>
+
+    <!-- NFC -->
+    <string name="nfc_tap_card">Đặt thẻ CCCD lên mặt sau điện thoại</string>
+    <string name="nfc_reading">Đang đọc chip NFC…</string>
+    <string name="nfc_success">Đọc thành công!</string>
+    <string name="nfc_error">Lỗi đọc NFC</string>
+
+    <!-- MRZ input hints -->
+    <string name="hint_doc_number">Số CCCD (Document Number)</string>
+    <string name="hint_dob">Ngày sinh (DDMMYY)</string>
+    <string name="hint_expiry">Ngày hết hạn (DDMMYY)</string>
+
+    <!-- Result labels -->
+    <string name="label_full_name">Họ và tên:</string>
+    <string name="label_doc_number">Số CCCD:</string>
+    <string name="label_personal_no">Số cá nhân:</string>
+    <string name="label_dob">Ngày sinh:</string>
+    <string name="label_sex">Giới tính:</string>
+    <string name="label_nationality">Quốc tịch:</string>
+    <string name="label_expiry">Ngày hết hạn:</string>
+</resources>

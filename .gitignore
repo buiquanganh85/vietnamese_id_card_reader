@@ -1,0 +1,35 @@
+# Gradle files
+.gradle/
+build/
+
+# Kotlin/Java compiled files
+*.class
+
+# Android Studio / IntelliJ files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local configuration file (SDK path, etc)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio Captures
+captures/
+
+# OS X files
+.DS_Store
+
+# Built variants
+/app/build/
+
+# Keystore files
+# *.jks
+# *.keystore
+
+# External Native Build
+.externalNativeBuild/
+.cxx/

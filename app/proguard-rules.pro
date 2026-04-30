@@ -1,0 +1,3 @@
+-keep class org.bouncycastle.** { *; }
+-dontwarn org.bouncycastle.**
+-keep class com.vn.cccdreader.data.** { *; }
