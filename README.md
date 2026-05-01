@@ -11,6 +11,17 @@ The application implements a step-by-step wizard to collect card data:
 4. **NFC Read:** Access the chip using Basic Access Control (BAC) to extract personal information and the biometric face photo.
 5. **Results:** Display all collected and verified data.
 
+## ✨ Key Features
+
+- **ICAO 9303 NFC Reading:** Securely reads the embedded chip using Basic Access Control (BAC).
+- **Automatic MRZ Extraction:** Uses Google ML Kit Text Recognition to automatically extract document number, date of birth, and expiry date from the back of the card.
+- **Color-Coded Validation:** MRZ fields are highlighted to show confidence:
+  - 🔵 **Blue:** Verified by ICAO check digits (high confidence).
+  - 🔴 **Red:** Failed check digit validation (OCR error detected).
+  - ⚫ **Black:** Manually edited or neutral state.
+- **Biometric Face Photo:** Extracts and displays the high-quality JPEG/JPEG2000 face photo from the chip (DG2).
+- **Modern Camera Interface:** Uses CameraX for a smooth card capture experience.
+
 ## 🛠 Tech Stack
 
 - **Language:** Kotlin 1.9.22
@@ -21,8 +32,7 @@ The application implements a step-by-step wizard to collect card data:
   - **BouncyCastle:** For ICAO 9303 BAC cryptography (3DES, SHA-1).
   - **Glide:** For efficient image loading and processing.
   - **Coroutines:** For asynchronous I/O and NFC transceive operations.
-  - **ViewBinding:** For safe UI interaction.
-  - **Google ML Kit:** For Text Recognition (OCR) used in MRZ extraction.
+  - **Google ML Kit:** For Text Recognition (OCR) and MRZ parsing.
 
 ## 📋 Requirements
 
@@ -63,7 +73,7 @@ app/src/main/java/com/vn/cccdreader/
 ├── ocr/
 │   └── MRZExtractor.kt        # Google ML Kit OCR for MRZ parsing
 ├── ui/
-│   ├── MRZInputActivity.kt    # Manual entry for MRZ data
+│   ├── MRZInputActivity.kt    # Manual entry and color-coded validation
 │   └── ResultActivity.kt      # Display of final results and face photo
 ├── util/
 │   └── IntentExt.kt           # Helper for Intent data passing (Parcelable)
@@ -80,13 +90,10 @@ The project includes unit and instrumentation tests:
 ## 📋 TODO List
 
 - [x] **Automatic MRZ Extraction:** Extract MRZ data from the verso card image to auto-fill Step 3. (Implemented using Google ML Kit)
+- [x] **Color-Coded MRZ Validation:** Provide visual feedback based on ICAO check digits.
 - [ ] **QR Code Extraction:** Extract QR code data from the verso card image.
 - [ ] **ID Number Extraction:** Extract the ID number from the recto card image.
-- [ ] **Data Verification:** Implement a verification layer to check coherence between:
-  - ID number from recto image.
-  - MRZ data from verso image.
-  - QR code data from verso image.
-  - Data read from the NFC chip.
+- [ ] **Data Verification:** Implement a verification layer to check coherence between image OCR, QR code, and NFC chip data.
 
 ## 📄 License
 
